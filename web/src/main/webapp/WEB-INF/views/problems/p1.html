@@ -1,0 +1,186 @@
+
+<%@page pageEncoding="UTF-8"%>
+<style>
+    a {
+        color: #1a5cc8;
+        text-decoration: none
+    }
+
+    a:hover {
+        color: orange;
+        text-decoration: underline
+    }
+
+    h2 {
+        color: blue
+    }
+
+    .toprow {
+        background-color: #1a5cc8;
+        color: #FFFFFF;
+        font-weight: bold;
+        white-space: nowrap;
+    }
+
+    .toprow a {
+        font-family: Arial;
+        font-weight: bold;
+        font-size: 18px;
+        color: #FFFFFF;
+        margin: 15px
+    }
+
+    .toprow a:hover {
+        font-family: Arial;
+        font-weight: bold;
+        font-size: 18px;
+        color: orange;
+        margin: 15px
+    }
+
+    .oddrow {
+        background-color: #D7EBFF;
+        white-space: nowrap;
+    }
+
+    .evenrow {
+        background-color: #FFFFFF;
+        white-space: nowrap;
+    }
+
+    /*body {*/
+    /*	background-color: #FFFFFF;*/
+    /*	background-image: url(../image/background.jpg);*/
+    /*}*/
+
+    .hd {
+        color: #FFFFFF;
+        font-weight: bold;
+    }
+
+    .time {
+        text-align: right;
+    }
+
+    .ip {
+        text-align: right;
+        padding-right: 5px;
+    }
+
+    tr.userinfo {
+        background-color: #FFFFF0;
+        font-size: 16px;
+    }
+
+    span.yes,
+    .green {
+        color: green;
+        font-weight: bolder;
+    }
+
+    span.no,
+    .red {
+        color: red;
+        font-weight: bolder;
+    }
+
+    span.exadmin {
+        color: gray;
+    }
+
+    #center {
+        text-align: center;
+    }
+
+    div.content {
+        height: auto;
+        background: #e4f0f8;
+        margin: 0;
+        padding: 0 20px;
+        font-size: 14px;
+        font-family: Times New Roman;
+        text-align: left
+    }
+
+    .sampledata {
+        white-space: pre;
+        background: #8db8ff;
+        font-size: 18px;
+    }
+</style>
+<center>
+    <h2>2^k进制数</h2><span class="green">Time Limit: </span>1 Sec&nbsp;&nbsp;<span class="green">Memory Limit: </span>125
+    MB<br>
+</center>
+<h2><a href=cache.html>Back to list</a></h2>
+<h2>Description</h2>
+<div class="content">
+    <p>
+        设r是个2<sup>k</sup>进制数，并满足以下条件：
+    </p>
+    <p>
+        （1）r至少是个2位的2<sup>k</sup>进制数。
+    </p>
+    <p>
+        （2）作为2<sup>k</sup>进制数，除最后一位外，r的每一位严格小于它右边相邻的那一位。
+    </p>
+    <p>
+        （3）将r转换为2进制数q后，则q的总位数不超过w。
+    </p>
+    <p>
+        在这里，正整数k（1≤k≤9）和w（k&lt;W≤30000）是事先给定的。
+    </p>
+    <p>
+        问：满足上述条件的不同的r共有多少个？
+    </p>
+    <p>
+        我们再从另一角度作些解释：设S是长度为w 的01字符串（即字符串S由w个“0”或“1”组成），S对应于上述条件（3）中的q。将S从右起划分为若干个长度为k
+        的段，每段对应一位2<sup>k</sup>进制的数，如果S至少可分成2段，则S所对应的二进制数又可以转换为上述的2<sup>k</sup>进制数r。
+    </p>
+    <p>
+        例：设k=3，w=7。则r是个八进制数（23=8）。由于w=7，长度为7的01字符串按3位一段分，可分为3段（即1，3，3，左边第一段只有一个二进制位），则满足条件的八进制数有：
+    </p>
+    <p>
+        2位数：高位为1：6个（即12，13，14，15，16，17），高位为2：5个，...，高位为6：1个（即67）。共6+5+...+1=21个。
+    </p>
+    <p>
+        3位数：高位只能是1，第2位为2：5个（即123，124，125，126，127），第2位为3：4个，...，第2位为6：1个（即167）。
+    </p>
+    <p>
+        <span style="line-height:1.5;">共5+4+…+1=15个。</span>
+    </p>
+    <p>
+        <span style="line-height:1.5;">所以，满足要求的r共有36个。</span>
+    </p>
+    <p>
+		<span style="line-height:1.5;"><br />
+		</span>
+    </p>
+</div>
+<h2>Input</h2>
+<div class="content"> 每组输入数据只有1行，为两个正整数，用一个空格隔开：<br />
+    <p>
+        k W
+    </p>
+    <p>
+        <br />
+    </p>
+</div>
+<h2>Output</h2>
+<div class="content"> 每组输出为1行，是一个正整数，为所求的计算结果，即满足条件的不同的r的个数（用十进制数表示），要求最高位不得为0，各数字之间不得插入数字以外的其他字符（例如空格、换行符、逗号等）。<br />
+    <p>
+        <span style="line-height:1.5;">（提示：作为结果的正整数可能很大，但不会超过200位）</span>
+    </p>
+    <p>
+		<span style="line-height:1.5;"><br />
+		</span>
+    </p>
+</div>
+<h2>Sample Input</h2>
+<div class="content"> <span class=sampledata>3 7</span> </div>
+<h2>Sample Output</h2>
+<div class="content"> <span class=sampledata>36</span> </div>
+<h2>HINT</h2>
+<div class="content"></div>
+<h2>Source</h2>
+<div class="content"> NOIP全国联赛提高组-2006年NOIP全国联赛提高组 </div>
