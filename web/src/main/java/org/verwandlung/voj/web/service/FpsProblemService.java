@@ -4,9 +4,12 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.mysql.cj.xdevapi.JsonArray;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.verwandlung.voj.web.controller.AccountsController;
 import org.verwandlung.voj.web.model.ProblemTag;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -58,7 +61,6 @@ public class FpsProblemService {
             }
             else if (name.equalsIgnoreCase("time_limit")) {
                 timeLimit = value;
-
             }
             else if (name.equalsIgnoreCase("memory_limit")) {
                 memoryLimit = value;
@@ -67,16 +69,16 @@ public class FpsProblemService {
                 description = value;
             }
             else if (name.equalsIgnoreCase("input")) {
-                inputFormat = value;
+                inputFormat = "".equals(value)?"无":value;
             }
             else if (name.equalsIgnoreCase("output")) {
-                outputFormat = value;
+                outputFormat = "".equals(value)?"无":value;
             }
             else if (name.equalsIgnoreCase("sample_input")) {
-                inputSample = value.equals("")?"无":value;
+                inputSample = "".equals(value)?"无":value;
             }
             else if (name.equalsIgnoreCase("sample_output")) {
-                outputSample = value.equals("")?"无":value;
+                outputSample = "".equals(value)?"无":value;
             }
             else if (name.equalsIgnoreCase("hint")) {
                 hint = value;
@@ -94,6 +96,9 @@ public class FpsProblemService {
             }
         }
         String testCases = JSONObject.toJSONString(testCaseList);
+        LOGGER.debug(String.format("problemName=%s, timeLimit=%s, memoryLimit=%s, description=%s, inputFormat=%s," +
+                        "outputFormat=%s, inputSample=%s, outputSample=%s, hint=%s, testCase=%s",
+                problemName,timeLimit,memoryLimit,description,inputFormat,outputFormat,inputSample,outputSample,hint,testCases));
         Map<String, Object> result = problemService.createProblem(problemName, Integer.parseInt(timeLimit)*1000,
                 Integer.parseInt(memoryLimit)*1024, description, hint, inputFormat, outputFormat, inputSample,
                 outputSample, testCases,"[]","[]", true, true);
@@ -115,6 +120,11 @@ public class FpsProblemService {
         }
         return doc;
     }
+
+    /**
+     * 日志记录器.
+     */
+    private static final Logger LOGGER = LogManager.getLogger(AccountsController.class);
 }
 
 class testCase{

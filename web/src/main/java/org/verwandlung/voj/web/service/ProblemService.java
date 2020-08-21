@@ -301,9 +301,10 @@ public class ProblemService {
 		Map<String, Object> result = (Map<String, Object>) getProblemCreationResult(problem);
 		if ( (boolean) result.get("isSuccessful") ) {
 			problemMapper.createProblem(problem);
-			
+			System.out.println("problemMapper is no problem");
 			long problemId = problem.getProblemId();
 			createTestCases(problemId, testCases, isExactlyMatch);
+			System.out.println("TestCasesCreate is no problem");
 			createProblemCategoryRelationships(problemId, problemCategories);
 			createProblemTags(problemId, problemTags);
 			
@@ -334,7 +335,7 @@ public class ProblemService {
 							   !result.get("isDescriptionEmpty")  && !result.get("isInputFormatEmpty") &&
 							   !result.get("isOutputFormatEmpty") && !result.get("isInputSampleEmpty") &&
 							   !result.get("isOutputSampleEmpty");
-		System.out.println(isSuccessful+"isSuccessful");
+		System.out.println("Problem is format :  " + isSuccessful);
 		result.put("isSuccessful", isSuccessful);
 		return result;
 	}
@@ -404,7 +405,8 @@ public class ProblemService {
 	 */
 	private void createTestCases(long problemId, String testCases, boolean isExactlyMatch) {
 		JSONArray jsonArray = JSON.parseArray(testCases);
-		
+
+		System.out.println("jsonArray.size() = "+jsonArray.size());
 		for ( int i = 0; i < jsonArray.size(); ++ i ) {
 			JSONObject testCase = jsonArray.getJSONObject(i);
 			
@@ -414,9 +416,14 @@ public class ProblemService {
 			}
 			String input = testCase.getString("input");
 			String output = testCase.getString("output");
-			
+
 			Checkpoint checkpoint = new Checkpoint(problemId, i, isExactlyMatch, score, input, output);
-			checkpointMapper.createCheckpoint(checkpoint);
+			try {
+				checkpointMapper.createCheckpoint(checkpoint);
+			}catch (Exception e){
+				System.out.println();
+			}
+
 		}
 	}
 	
