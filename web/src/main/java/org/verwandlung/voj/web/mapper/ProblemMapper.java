@@ -118,7 +118,7 @@ public interface ProblemMapper {
 			@Param("problemTagId") long problemTagId,
 			@Param("isPublicOnly") boolean isPublicOnly,
 			@Param("problemId") long offset, @Param("limit") int limit);
-	
+
 	/**
 	 * 创建一个新的试题对象.
 	 * @param problem - 试题对象

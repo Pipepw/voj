@@ -41,14 +41,14 @@ package org.verwandlung.voj.web.service;
 
 import java.util.*;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import org.verwandlung.voj.web.mapper.CheckpointMapper;
-import org.verwandlung.voj.web.mapper.ProblemCategoryMapper;
-import org.verwandlung.voj.web.mapper.ProblemMapper;
-import org.verwandlung.voj.web.mapper.ProblemTagMapper;
+import org.verwandlung.voj.web.controller.ExceptionHandlingController;
+import org.verwandlung.voj.web.mapper.*;
 import org.verwandlung.voj.web.model.*;
 import org.verwandlung.voj.web.util.SlugifyUtils;
 
@@ -116,7 +116,8 @@ public class ProblemService {
 		if ( problemTag != null ) {
 			problemTagId = problemTag.getProblemTagId();
 		}
-		return problemMapper.getProblemsUsingFilters(keyword, problemCategoryId, problemTagId, isPublicOnly, offset, limit);
+		List<Problem> problems = problemMapper.getProblemsUsingFilters(keyword, problemCategoryId, problemTagId, isPublicOnly, offset, limit);
+		return problems;
 	}
 	
 	/**
@@ -730,10 +731,14 @@ public class ProblemService {
 	 */
 	@Autowired
 	private ProblemTagMapper problemTagMapper;
+
+	@Autowired
+	private ProblemDifficultyMapper problemDifficultyMapper;
 	
 	/**
 	 * 自动注入的CheckpointMapper对象.
 	 */
 	@Autowired
 	private CheckpointMapper checkpointMapper;
+	private static final Logger LOGGER = LogManager.getLogger(ExceptionHandlingController.class);
 }

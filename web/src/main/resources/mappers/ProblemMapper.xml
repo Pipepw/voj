@@ -18,6 +18,8 @@
 		<result property="sampleInput" column="problem_sample_input" />
 		<result property="sampleOutput" column="problem_sample_output" />
 		<result property="hint" column="problem_hint" />
+		<result property="problemDifficultyName" column="problem_difficulty_name"/>
+		<result property="problemTagNames" column="problem_tag_names"/>
 	</resultMap>
 
 	<!-- Methods -->
@@ -102,8 +104,18 @@
 			SELECT COUNT(*) 
 			FROM voj_submissions s 
 			WHERE s.problem_id = p.problem_id AND s.submission_judge_result = 'AC'
-		) AS accepted_submission
-		FROM voj_problems p 
+		) AS accepted_submission, (
+		    SELECT problem_difficulty_name
+            FROM voj_problem_difficulty AS pd
+            NATURAL JOIN voj_problem_difficulty_relationships AS pdr
+            WHERE pdr.problem_id = p.problem_id
+		) AS problem_difficulty_name, (
+	        SELECT GROUP_CONCAT(problem_tag_name)
+		    FROM voj_problem_tags AS pt
+		    NATURAL JOIN voj_problem_tag_relationships AS ptr
+		    WHERE ptr.problem_id = p.problem_id
+        ) AS problem_tag_names
+		FROM voj_problems p
 		NATURAL JOIN voj_problem_category_relationships pcr
 		<if test="problemTagId != 0">
 			NATURAL JOIN voj_problem_tag_relationships ptr

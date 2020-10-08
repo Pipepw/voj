@@ -169,6 +169,24 @@ public class Problem implements Serializable {
 		this.problemTags = problemTags;
 	}
 
+
+	public String getProblemDifficultyName() {
+		return problemDifficultyName;
+	}
+
+	public void setProblemDifficultyName(String problemDifficultyName) {
+		this.problemDifficultyName = problemDifficultyName;
+	}
+
+
+	public String getProblemTagNames() {
+		return problemTagNames;
+	}
+
+	public void setProblemTagName(String problemTagNames) {
+		this.problemTagNames = problemTagNames;
+	}
+
 	/**
 	 * 获取试题提交总数.
 	 * @return 试题提交总数
@@ -335,11 +353,10 @@ public class Problem implements Serializable {
 	@Override
 	public String toString() {
 		return String.format("Problem: [ProblemID=%s, isPublic=%s, ProblemName=%s, TotalSubmission=%s, "
-							+ "AcceptedSubmission=%s, TimeLimit=%s, MemoryLimit=%s, Description=%s, "
-							+ "InputFormat=%s, OutputFormat=%s, SampleInput=%s, SampleOutput=%s, Hint=%s]", 
-				new Object[] { problemId, isPublic, problemName, totalSubmission, acceptedSubmission, 
-								timeLimit, memoryLimit, description, inputFormat, outputFormat, sampleInput, 
-								sampleOutput, hint});
+							+ "AcceptedSubmission=%s, TimeLimit=%s, MemoryLimit=%s, Description=%s, Difficulty=%s, "
+							+ "Tags=%s, InputFormat=%s, OutputFormat=%s, SampleInput=%s, SampleOutput=%s, Hint=%s]",
+				new Object[] { problemId, isPublic, problemName, totalSubmission, acceptedSubmission, timeLimit, memoryLimit, description,
+						problemDifficultyName, problemTagNames, inputFormat, outputFormat, sampleInput, sampleOutput, hint});
 	}
 
 	/**
@@ -361,7 +378,17 @@ public class Problem implements Serializable {
 	 * 试题包含的标签.
 	 */
 	private List<ProblemTag> problemTags;
-	
+
+	/**
+	 * 试题的难度
+	 */
+	private String problemDifficultyName;
+
+	/**
+	 * 试题tag的名字数组（json类型）
+	 */
+	private String problemTagNames;
+
 	/**
 	 * 试题的总提交总数.
 	 */

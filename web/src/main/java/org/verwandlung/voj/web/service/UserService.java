@@ -130,7 +130,7 @@ public class UserService {
 	public User getUserUsingUsernameOrEmail(String username) {
 		boolean isUsingEmail = username.indexOf('@') != -1;
 		User user = null;
-			
+
 		if ( !isUsingEmail ) {
 			user = userMapper.getUserUsingUsername(username);
 		} else {
